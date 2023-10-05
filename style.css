@@ -1,0 +1,138 @@
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('https://graph.org/file/5094d4450f1dd05474562.jpg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+body::after {
+    content: "";
+    background-color: rgba(255, 255, 255, 0.7); /* 50% opacity white background */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+}
+
+.custom-heading {
+    font-family: Arial, sans-serif;
+    font-size: 40px;
+    font-weight: bold; /* Make the text bold */
+    color: black; /* Change the text color to black */
+}
+
+.label-button {
+    font-weight: bold; /* Make the text bold */
+    font-size: 18px;   /* Increase the font size */
+}
+
+#playerName {
+    border-radius: 8px; /* Add rounded corners */
+    padding: 8px; /* Add padding for spacing inside the input box */
+    font-size: 16px; /* Adjust the font size */
+    width: 250px; /* Adjust the width as needed */
+}
+
+#input-container {
+    display: initial; 
+}
+
+.hide-chest {
+    display: none;
+  }
+
+#welcomeMessage {
+    font-weight: bold; /* Make the text bold */
+    font-size: 34px;   /* Increase the font size */
+}
+
+.treasure-chest {
+    margin-right: 20px; /* Add space to the right of each .treasure-chest element */
+    border: 5px solid transparent; /* Add a transparent border to all chests */
+    transition: border-color 0.3s;
+    cursor: pointer;
+  }
+
+.treasure-chest img {
+    width: 120px; /* Set the desired width */
+    height: auto; /* Automatically adjust the height to maintain aspect ratio */
+    border-radius: 30px; /* Add rounded corners */
+  }
+
+.treasure-chest:hover {
+    border-color: rgb(0, 255, 89); 
+  }
+
+
+.header {
+    text-align: center;
+    padding: 20px;
+}
+
+.game-container {
+    display: flex;
+    flex-wrap: wrap; /* Allow boxes to wrap to the next line if needed */
+    justify-content: center; /* Center-align the boxes horizontally */
+    align-items: flex-start; /* Align the boxes to the top of the container */
+    margin-top: 120px;
+}
+
+
+.score-leaderboard {
+    text-align: center; /* Center the content horizontally */
+    position: relative; /* Enable positioning */
+    top: -150px; /* Move the element 20px down from the top */
+    left: 10px
+  }
+  
+.score {
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: auto; /* Center horizontally */
+    margin-right: auto;
+}
+
+.highscore {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: auto; /* Center horizontally */
+    margin-right: auto;
+}
+
+
+.next-button {
+    display: none; /* Hide the button initially */
+  }
+
+
+.leaderboard {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: white;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.leaderboard h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+#leaderboardList {
+    list-style: none;
+    padding: 0;
+}
+
+#leaderboardList li {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
