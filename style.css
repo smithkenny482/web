@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-image: url('images/background.jpg');
+    background-image: url("images/background.jpg");
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
@@ -58,7 +58,7 @@ body::after {
   }
 
 .treasure-chest img {
-    width: 120px; /* Set the desired width */
+    width: 100px; /* Set the desired width */
     height: auto; /* Automatically adjust the height to maintain aspect ratio */
     border-radius: 30px; /* Add rounded corners */
   }
