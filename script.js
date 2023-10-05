@@ -1,5 +1,8 @@
-let player = {'name': null, 'highscore':0 , 'current_score':0 , 'gameover':false};
+let player = {'name': null, 'highscore':0 , 'current_score':0 , 'opened_chest':false, 'gameover':false};
 let players_data = []
+
+// load sound
+const chest_open_audio = new Audio('chest.mp3');
 
 function startGame() {
     playerName = document.getElementById('playerName').value;
@@ -20,8 +23,8 @@ function startGame() {
 }
 
 function updateScore() {
-    document.getElementById('playerScore').textContent = player['current_score'];
-    document.getElementById('highscore').textContent = player['highscore'];
+    document.getElementById('playerScore').textContent = player.current_score;
+    document.getElementById('highscore').textContent = player.highscore;
 }
 
 function generateBoxes() {
@@ -77,32 +80,41 @@ function updateLeaderboard(playerName, playerScore) {
 }
 
 function openBox(chest , playerName) {
-    if (players_data[playerName['gameover']]) {
+    if (player.gameover) {
         alert(`Game over, ${playerName}! Start a new game!`);
         return; 
     }
 
-    const outcome = Math.random();
+    if (player.opened_chest) {
+        return;
+    }
 
+    chest_open_audio.play();
+
+     // change chest image
+    chest.firstElementChild.src = "images/open_chest.jpg";
+
+    const outcome = Math.random();
     let points = 0;
+
     if (outcome < 0.4) {
         points = 10; // 40% chance of getting 10 points
     } else if (outcome < 0.7) {
         points = 15; // 30% chance of getting 15 points
     } else {
-        gameOver = true; // 30% chance of hitting a bomb, game over
+        player.gameover = true; // 30% chance of hitting a bomb, game over
     }
 
     // Update player score
-    playerScore += points;
-    updateScore();
+    player.current_score += points;
+    player.opened_chest = true;
 
-    if (gameOver) {
-
-        if (playerScore > highscore) {
-            highscore = playerScore; 
-        }
+    if (player.current_score > player.highscore) {
+        player.highscore = player.current_score
+        updateLeaderboard();
     }
+
+    updateScore();
 }
 // Function to start the next round
 function nextRound() {
