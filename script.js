@@ -107,5 +107,5 @@ function openBox(chest , playerName) {
 function nextRound() {
     gameInProgress = false; // Reset the game state
     document.querySelector('.next-button button').style.display = 'none'; // Hide the "Next" button
-    generateChests();
+    //generateChests();
 }
