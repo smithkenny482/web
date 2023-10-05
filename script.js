@@ -1,4 +1,5 @@
-let players_data = {}
+let player = {'name': null, 'highscore':0 , 'current_score':0 , 'gameover':false};
+let players_data = []
 
 function startGame() {
     playerName = document.getElementById('playerName').value;
@@ -7,10 +8,10 @@ function startGame() {
     document.getElementById('input-container').style.display = 'none';
     document.getElementById('welcomeMessage').textContent = `Welcome ${playerName}, Tap any of the box below`;
     
-    let new_player_data = {'name':playerName , 'highscore':0 , 'current_score':0 , 'gameover':false}
-    players_data[playerName] = new_player_data
+    player.name = playerName
+    players_data.push(player);
 
-    updateLeaderboard(playerName, players_data[playerName]['highscore']);
+    updateLeaderboard(playerName, player['highscore']);
 
     const chestElements = document.querySelectorAll('.treasure-chest.hide-chest');
     chestElements.forEach((chest) => {
@@ -19,8 +20,8 @@ function startGame() {
 }
 
 function updateScore() {
-    document.getElementById('playerScore').textContent = playerScore;
-    document.getElementById('highscore').textContent = highscore;
+    document.getElementById('playerScore').textContent = player['current_score'];
+    document.getElementById('highscore').textContent = player['highscore'];
 }
 
 function generateBoxes() {
@@ -64,11 +65,11 @@ function updateLeaderboard(playerName, playerScore) {
     const leaderboardList = document.getElementById('leaderboardList');
     let text = ''
 
-    const sorted_dict = Object.entries(players_data);
-    sorted_dict.sort((a, b) => b[1]['highscore'] - a[1]['highscore']);
+    const sorted_arr = Object.entries(players_data);
+    sorted_arr.sort((a, b) => b[1]['highscore'] - a[1]['highscore']);
 
-    for (let i = 0; i < sorted_dict.length; i++) {
-        const user = sorted_dict[i][1];
+    for (let i = 0; i < sorted_arr.length; i++) {
+        const user = sorted_arr[i][1];
         text += (i + 1) + '. ' + user['name'] + ' : '+ user['highscore'] + '\n';
       }
 
