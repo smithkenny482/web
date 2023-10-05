@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open the Treasure chest</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="header">
+        <p class="custom-heading">Open the Treasure Chest</p>
+
+
+        <div id="input-container">
+            <label for="playerName" class="label-button">Enter Your Name: </label>
+            <input type="text" id="playerName">
+            <button onclick="startGame()" class="label-button">Start Game</button>
+        </div>
+        <p id="welcomeMessage"></p>
+        
+    </div>
+    <div class="game-container">
+
+        <div class="score-leaderboard">
+            <div class="score">
+                <p>Score: <span id="playerScore">0</span></p>
+            </div>
+            <div class="highscore">
+                <p>Highscore: <span id="highscore">0</span></p>
+            </div>
+        </div>
+
+
+        <div class="treasure-chest hide-chest" onclick="openBox(this)">
+            <img src="https://graph.org/file/a5903f742933fd2c80cd6.jpg" alt="Treasure Chest">
+          </div>
+          <div class="treasure-chest hide-chest" onclick="openBox(this)">
+            <img src="https://graph.org/file/a5903f742933fd2c80cd6.jpg" alt="Treasure Chest">
+          </div>
+          <div class="treasure-chest hide-chest" onclick="openBox(this)">
+            <img src="https://graph.org/file/a5903f742933fd2c80cd6.jpg" alt="Treasure Chest">
+        </div>
+                 
+
+        <div class="next-button">
+            <button onclick="nextRound()">Next</button>
+        </div>
+    </div>
+
+    <div class="leaderboard">
+        <h2>Leaderboard</h2>
+        <ol id="leaderboardList"></ol>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
