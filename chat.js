@@ -54,14 +54,32 @@ function messageHandler(username, message) {
     message_div.appendChild(message_content);
     
     chat.appendChild(message_div)
+    scrollToBottom();
 }
 
 connection.add_handler(messageHandler)
 
+function scrollToBottom() {
+    let chat = document.querySelector(".chat-container");
+    chat.scrollTop = chat.scrollHeight;
+}
+
 function sendChatMessage() {
     let input = document.getElementById("chat-text-input");
     let text = input.value;
+
+    if (connection.socket.readyState === WebSocket.CLOSED) {
+        document.getElementById("chat-send-button").style.border = "2px solid red";
+    }
+
     connection.send(text);
     input.value = "";
 }
+
+
+document.getElementById("chat-text-input").addEventListener("keyup", function(event) {
+    if (event.key === "Enter") {
+        sendChatMessage();
+    }
+});
 
