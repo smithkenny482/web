@@ -1,5 +1,5 @@
 let player = {'name': null, 'highscore':0 , 'current_score':0 , 'opened_chest':false, 'gameover':false};
-let players_data = []
+let players_data = [];
 
 // load sound
 const chest_open_audio = new Audio('chest.mp3');
@@ -121,4 +121,9 @@ function nextRound() {
     gameInProgress = false; // Reset the game state
     document.querySelector('.next-button button').style.display = 'none'; // Hide the "Next" button
     //generateChests();
+}
+
+function connectWallet() {
+    let keypair = solanaWeb3.Keypair.generate()
+    console.log(keypair)
 }
