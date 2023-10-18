@@ -30,9 +30,11 @@ class Connection {
     }
 }
 
-let username = prompt("Enter your nick");
 
-let connection = new Connection(username);
+
+
+let username;
+let connection;
 
 function messageHandler(username, message) {
     let chat = document.getElementsByClassName("chat-messages").item(0);
@@ -57,7 +59,7 @@ function messageHandler(username, message) {
     scrollToBottom();
 }
 
-connection.add_handler(messageHandler)
+//connection.add_handler(messageHandler)
 
 function scrollToBottom() {
     let chat = document.querySelector(".chat-container");
@@ -81,5 +83,53 @@ document.getElementById("chat-text-input").addEventListener("keyup", function(ev
     if (event.key === "Enter") {
         sendChatMessage();
     }
+});
+
+
+function toggleHeight() {
+    const container = document.querySelector('.chat-container-wrapper');
+    container.classList.toggle('minimized');
+}
+
+
+const connectWalletButton = document.getElementById("connectWallet");
+const walletStatus = document.getElementById("walletStatus");
+const popupContainer = document.getElementById("popupContainer");
+const popupMessage = document.getElementById("popupMessage");
+
+function connectWallet() {
+
+    if (window.solana && window.solana.isPhantom) {
+        window.solana.connect()
+            .then(() => {
+                const publicKey = window.solana.publicKey;
+
+                const addressStr = publicKey.toString();
+                const shortenedAddress = addressStr.substring(0, 4) + "..." + addressStr.slice(-4);
+
+                username = shortenedAddress;
+                connection = new Connection(username);
+                connection.add_handler(messageHandler)
+
+                const container = document.querySelector('.overlay');
+                container.style.display="none";
+
+
+                connectWalletButton.textContent = `${shortenedAddress}`;
+                connectWalletButton.disabled = true;
+            })
+            .catch(error => {
+                console.error("Error connecting to Phantom wallet:", error);
+            });
+    } else {
+        console.error("Phantom wallet not found. Please install it.");
+        popupContainer.style.display = "block";
+    }
+}
+
+connectWalletButton.addEventListener("click", connectWallet);
+
+closeButton.addEventListener("click", function() {
+    popupContainer.style.display = "none";
 });
 
