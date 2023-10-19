@@ -178,6 +178,69 @@ p {
 
 
 
+.purple-button {
+    background-color: #8a61cc; /* Purple color for Phantom wallet */
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 20px;
+    transition: background-color 0.3s;
+    margin-left: 1000px;
+    margin-top: -5px;
+    font-weight: bold;
+}
+
+.purple-button:hover {
+    background-color: #563196; /* Slightly darker purple on hover */
+}
+
+#walletStatus {
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+
+
+.popup-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: black;
+    color: white;
+    border-radius: 10px;
+    z-index: 1000;
+    text-align: center;
+    display: none; /* Initially hide the popup */
+}
+
+.popup-content {
+    padding: 20px;
+    position: relative;
+}
+
+.popup-message {
+    margin-bottom: 15px;
+    font-size: 34px;
+}
+
+
+.close-button {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    color: white;
+    cursor: pointer;
+    font-size: 30px;
+}
+
+.close-button:hover {
+    color: red; 
+}
+
+
 
 
 

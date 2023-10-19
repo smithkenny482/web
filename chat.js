@@ -35,6 +35,7 @@ class Connection {
 
 let username;
 let connection;
+let wallet_connection_status = false;
 
 function messageHandler(username, message) {
     let chat = document.getElementsByClassName("chat-messages").item(0);
@@ -58,8 +59,6 @@ function messageHandler(username, message) {
     chat.appendChild(message_div)
     scrollToBottom();
 }
-
-//connection.add_handler(messageHandler)
 
 function scrollToBottom() {
     let chat = document.querySelector(".chat-container");
@@ -99,37 +98,68 @@ const popupMessage = document.getElementById("popupMessage");
 
 function connectWallet() {
 
-    if (window.solana && window.solana.isPhantom) {
-        window.solana.connect()
-            .then(() => {
-                const publicKey = window.solana.publicKey;
+    if (wallet_connection_status == false){
+        console.log('connecting wallet')
+        if (window.solana && window.solana.isPhantom) {
+                window.solana.connect()
+                    .then(() => {
+                        const publicKey = window.solana.publicKey;
+                        const addressStr = publicKey.toString();
+                        const shortenedAddress = addressStr.substring(0, 4) + "..." + addressStr.slice(-4);
 
-                const addressStr = publicKey.toString();
-                const shortenedAddress = addressStr.substring(0, 4) + "..." + addressStr.slice(-4);
+                        username = shortenedAddress;
+                        connection = new Connection(username);
+                        wallet_connection_status = true;
+                        connection.add_handler(messageHandler)
 
-                username = shortenedAddress;
-                connection = new Connection(username);
-                connection.add_handler(messageHandler)
-
-                const container = document.querySelector('.overlay');
-                container.style.display="none";
-
-
-                connectWalletButton.textContent = `${shortenedAddress}`;
-                connectWalletButton.disabled = true;
-            })
-            .catch(error => {
-                console.error("Error connecting to Phantom wallet:", error);
-            });
-    } else {
-        console.error("Phantom wallet not found. Please install it.");
-        popupContainer.style.display = "block";
+                        const container = document.querySelector('.overlay');
+                        container.style.display="none";
+                        connectWalletButton.textContent = `${shortenedAddress}`;
+                    })
+                    .catch(error => {
+                        console.error("Error connecting to Phantom wallet:", error);
+                    });
+            } else {
+                console.error("Phantom wallet not found. Please install it.");
+                popupContainer.style.display = "block";
+            }
     }
+
+    else {
+        const container = document.querySelector('.wallet-more-wrapper');
+        
+        if (container.style.display == "none") {
+            container.style.display = "block";
+        } 
+        else {
+            container.style.display = "none";
+
+        }
+    }
+    
 }
+
+
+
 
 connectWalletButton.addEventListener("click", connectWallet);
 
-closeButton.addEventListener("click", function() {
-    popupContainer.style.display = "none";
-});
+
+
+const disconnectWalletButton = document.getElementById("disconnectWallet");
+function disconnectWallet() {
+  if (window.solana && window.solana.isPhantom) {
+    window.solana.disconnect();
+    connectWalletButton.textContent = "Connect Wallet";
+    wallet_connection_status = false;
+    const wallet_wrapper = document.querySelector('.wallet-more-wrapper');
+    wallet_wrapper.style.display = "none";
+
+    const overlay = document.querySelector('.overlay');
+    overlay.style.display="block";
+
+  }
+}
+
+disconnectWalletButton.addEventListener("click", disconnectWallet);
 
