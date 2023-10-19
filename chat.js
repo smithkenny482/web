@@ -28,6 +28,10 @@ class Connection {
     add_handler(handler) {
         this.message_handlers.push(handler);
     }
+
+    disconnect() {
+        this.socket.close();
+    }
 }
 
 
@@ -139,17 +143,13 @@ function connectWallet() {
     
 }
 
-
-
-
 connectWalletButton.addEventListener("click", connectWallet);
-
-
 
 const disconnectWalletButton = document.getElementById("disconnectWallet");
 function disconnectWallet() {
   if (window.solana && window.solana.isPhantom) {
     window.solana.disconnect();
+    connection.disconnect();
     connectWalletButton.textContent = "Connect Wallet";
     wallet_connection_status = false;
     const wallet_wrapper = document.querySelector('.wallet-more-wrapper');
