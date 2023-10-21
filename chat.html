@@ -11,54 +11,85 @@
 <body>
     <style>
 
-        /* width */
+        .chat-container-wrapper {
+            position: fixed;
+            background-image: url('https://graph.org/file/b6ef8a9304a16cc683dd5.jpg');
+            background-size: cover; 
+            background-position: center; 
+            background-repeat: no-repeat; 
+            display: flex;
+            height: 69vh;
+            width: 29.3vw;
+            border-radius: 1vh;
+            margin-top: 12vh;
+            margin-left: 35vw;
+}
+
         ::-webkit-scrollbar {
-            width: 16px;
+            width: 0px;
         }
 
-        /* Track */
         ::-webkit-scrollbar-track {
-            box-shadow: inset 0 0 2px grey;
+            box-shadow: inset 0 0 2px rgb(46, 46, 46);
             border-radius: 10px;
         }
 
-        /* Handle */
         ::-webkit-scrollbar-thumb {
-            background: gray;
+            background: rgb(55, 55, 55);
             border-radius: 10px;
+        }
+
+        .chatroom-header {
+            z-index: 1;
+            background-color: #000000;
+            height: 7vh;
+            width: 27.31vw;
+            border-top-left-radius: 1vw;
+            border-top-right-radius: 1vw;
+            word-wrap: break-word;
+            position: absolute;
+            text-align: center; 
+            font-size: 1.5vw; 
+            font-weight: bold; 
+            color: white; 
+            margin-left: 0.95vw;
+            margin-top: 2vh;
+            line-height: 6vh;
         }
 
         .chat-container {
-            padding: 10px;
-            background-color: #ffffff;
-            height: 300px;
-            width: 400px;
+            padding: 1vh;
+            background-color: #f1f1f1;
+            height: 49.3vh;
+            width: 26.4vw;
             overflow-y: scroll;
             overflow-x: hidden;
-            border-radius: 10px;
+            /*border-radius: 10px;*/
             word-wrap: break-word;
-            position: relative;
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            margin-left: 0.95vw;
+            margin-top: 4.3vw;
         }
 
         .chat-container * + * {
-            margin-top: 10px;
+            margin-top:  1vh;
         }
 
         .message-content {
             width: fit-content;
-            padding: 10px;
-            border-radius: 10px;
-            background-color: #6a6b68;
-            color: white
+            padding: 1vh;
+            border-radius: 1vh;
+            background-color: #d2ebff;
+            font-size: 2.2vh;
+            color: rgb(0, 0, 0)
         }
 
         .message-author {
-            
+            margin-bottom: -1vh;
+            margin-left: 1vh;
             color: rgb(70, 164, 196);
+            margin-top: 1.2vh;
+            font-size: 1.8vh;
         }
 
 
@@ -66,65 +97,165 @@
             display: flex;
             align-items: center;
             justify-content: center; /* Center horizontally */
-            background: #f0f0f0;
-            border-radius: 10px;
-            padding: 10px;
-            width: 400px;
-            margin: 0 auto; /* Center horizontally */
-            margin-top: 34%;
+            background: #949494;
+            /*border-radius: 10px;*/
+            padding: 2vh;
+            width: 25.5vw;
+            height: 3vh;
+            margin-top: 60.4vh;
+            margin-left: 0.92vw;
+            border-bottom-left-radius: 1vh;
+            border-bottom-right-radius: 1vh;
 }
 
-
         #chat-text-input {
-            flex: 1; /* Allow the input field to take up available space */
+            flex: 1;
             border: none;
-            border-radius: 15px; /* Rounded edges for the input field */
-            padding: 10px;
-            margin-right: 10px; /* Add some spacing between the input field and the button */
-            white-space: normal; /* Allow text to wrap to a new line */
-            overflow-wrap: break-word; /* Handle long words */
-            max-width: 100%;
+            border-radius: 1vh; 
+            padding: 1.8vh;
+            white-space: normal; 
+            overflow-wrap: break-word; 
+            /*max-width: 100%;*/
+            width: 5vw;
             overflow: hidden;
+            margin-top: 0.2vh;
+            margin-left: -0.5vw;
+            font-size: 1.8vh;
         }
 
         #chat-text-input::placeholder {
-            color: #999; /* Placeholder text color */
+            color: #5a5a5a; 
         }
 
         #chat-send-button {
-            background: #3498db; /* Light blue background for the send button */
-            color: #fff; /* Text color */
+            background: #3498db; 
+            color: #fff;
             border: none;
-            border-radius: 15px; /* Rounded edges for the button */
-            padding: 10px 20px; /* Adjust padding for button size */
+            border-radius: 1vh; 
             cursor: pointer;
-            margin-top: -1px;
+            margin-top: 0.3vh;
+            margin-left: 0.5vw;
+            margin-right: -0.3vw;
+            font-size: 1.8vh;
+            width: 5vw;
+            height: 5.3vh;
         }
 
         #chat-send-button:hover {
-            background: #2c77b7; /* Darker blue on hover */
+            background: #2c77b7; 
+        }
+
+        .cheader {
+            position: fixed;
+            background-color: rgb(55, 55, 55); 
+            width: 100vw;
+            height: 10vh; 
+            margin-bottom: 90vh;
+        }
+
+        .cfooter {
+            position: fixed;
+            background-color: grey; 
+            width: 100vw;
+            height: 10vh; 
+            margin-top: 90vh;
+
+        }
+
+        .overlay {
+            position: fixed;
+            width: 50vw;
+            height: 75vh;
+            background-color: #000000;
+            display: block;
+            z-index: 999; 
+            margin-top: 12vh;
+            margin-left: 25vw;
+            border-radius: 2vh;
+        }
+
+        .overlay-content {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 2vh;
+            border-radius: 1vh;
+            text-align: center;
+            margin-top: 20vh;
+            text-align: center; 
+            font-size: 6vh; 
+            font-weight: bold; 
+        }
+
+        .wallet-more-wrapper {
+            position: fixed;
+            width: 12.5vw;
+            height: 25vh;
+            background-color: #c3c3c3;
+            display: none;
+            top: 12vh;
+            left: 86vw;
+            border-radius: 1vw;
+            z-index: 2;
+
+        }
+
+        .wallet-disconnect {
+            background-color: #7546C0;
+            display: block;
+            border-radius: 1.5vh;
+            margin-top: 1.5vh;
+            margin-left: 2vw; 
+            color: white;
+            text-align: center; 
+            line-height: 5vh;
+            transition: background-color 0.3s;
+            cursor: pointer;
+            width: 19vh;
+            height: 5vh;
+            font-size: 2vh;
+        }
+
+        .wallet-disconnect:hover {
+            background-color: #3e2467;
         }
 
     </style>
-    <div class="chat-container">
-        <div class="chat-messages">
-            <div class="chat-message">
-                <div class="message-author">OwO</div>
-                <div class="message-content">
-                    Hello
-                    whatsup , how u doing
-                </div>
-            </div>
+
+    <div class="wallet-more-wrapper">
+        <div class="wallet-disconnect" id="disconnectWallet">
+            Disconnect
+        </div>
+    </div>
+
+    <div id="overlay-container" class="overlay">
+        <div class="overlay-content">
+            <p>Connect your wallet to continue.</p>
+        </div>
+    </div>
+
+    <div class = "cheader">
+        <button id="connectWallet" class="purple-button">Connect Wallet</button>
+    </div>
+
+    <div class="chat-container-wrapper">
+        <div class="chatroom-header">
+            Top Secret Chat Room
         </div>
 
-    </div>  
+        <div class="chat-container">
+            <div class="chat-messages"></div>
+        </div>
 
-    <div class="chat-input">
-        <input id="chat-text-input" type="text" placeholder="type your message...",onkeydown="checkForEnter(event)">
-        <button id="chat-send-button" onclick="sendChatMessage()">Send</button>
-    </div>
+        <div class="chat-input">
+            <input id="chat-text-input" type="text" placeholder="Type your message..." onkeydown="checkForEnter(event)">
+            <button id="chat-send-button" onclick="sendChatMessage()">Send</button>
+        </div>
         
-    
+        
+    </div>
+
+    <div class = "cfooter">
+    </div>
 
     <script src="chat.js"></script>
 </body>

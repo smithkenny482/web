@@ -1,15 +1,18 @@
 body {
     font-family: Arial, sans-serif;
-    background-image: url("images/background.jpg");
+    background-image: url('https://graph.org/file/c6b469ba5a83a7666458f.jpg');
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
     background-size: cover;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
 }
 
 body::after {
     content: "";
-    background-color: rgba(255, 255, 255, 0.7); /* 50% opacity white background */
+    background-color: rgba(255, 255, 255, 0.01); 
     position: fixed;
     top: 0;
     left: 0;
@@ -20,21 +23,21 @@ body::after {
 
 .custom-heading {
     font-family: Arial, sans-serif;
-    font-size: 40px;
-    font-weight: bold; /* Make the text bold */
-    color: black; /* Change the text color to black */
+    font-size: 5vh;
+    font-weight: bold; 
+    color: black; 
 }
 
 .label-button {
-    font-weight: bold; /* Make the text bold */
-    font-size: 18px;   /* Increase the font size */
+    font-weight: bold; 
+    font-size: 18px;   
 }
 
 #playerName {
-    border-radius: 8px; /* Add rounded corners */
-    padding: 8px; /* Add padding for spacing inside the input box */
-    font-size: 16px; /* Adjust the font size */
-    width: 250px; /* Adjust the width as needed */
+    border-radius: 8px;
+    padding: 8px; 
+    font-size: 16px; 
+    width: 250px; 
 }
 
 #input-container {
@@ -46,21 +49,21 @@ body::after {
   }
 
 #welcomeMessage {
-    font-weight: bold; /* Make the text bold */
-    font-size: 34px;   /* Increase the font size */
+    font-weight: bold; 
+    font-size: 34px;   
 }
 
 .treasure-chest {
-    margin-right: 20px; /* Add space to the right of each .treasure-chest element */
-    border: 5px solid transparent; /* Add a transparent border to all chests */
+    margin-right: 20px; 
+    border: 5px solid transparent; 
     transition: border-color 0.3s;
     cursor: pointer;
   }
 
 .treasure-chest img {
-    width: 150px; /* Set the desired width */
-    height: auto; /* Automatically adjust the height to maintain aspect ratio */
-    border-radius: 30px; /* Add rounded corners */
+    width: 120px; 
+    height: auto; 
+    border-radius: 30px; 
   }
 
 .treasure-chest:hover {
@@ -70,22 +73,21 @@ body::after {
 
 .header {
     text-align: center;
-    padding: 20px;
 }
 
 .game-container {
     display: flex;
-    flex-wrap: wrap; /* Allow boxes to wrap to the next line if needed */
-    justify-content: center; /* Center-align the boxes horizontally */
-    align-items: flex-start; /* Align the boxes to the top of the container */
+    flex-wrap: wrap; 
+    justify-content: center; 
+    align-items: flex-start; 
     margin-top: 120px;
 }
 
 
 .score-leaderboard {
-    text-align: center; /* Center the content horizontally */
-    position: relative; /* Enable positioning */
-    top: -150px; /* Move the element 20px down from the top */
+    text-align: center; 
+    position: relative; 
+    top: -150px; 
     left: 10px
   }
   
@@ -93,7 +95,7 @@ body::after {
     margin-bottom: 20px;
     font-size: 18px;
     font-weight: bold;
-    margin-left: auto; /* Center horizontally */
+    margin-left: auto; 
     margin-right: auto;
 }
 
@@ -101,13 +103,13 @@ body::after {
     margin-top: 20px;
     font-size: 18px;
     font-weight: bold;
-    margin-left: auto; /* Center horizontally */
+    margin-left: auto; 
     margin-right: auto;
 }
 
 
 .next-button {
-    display: none; /* Hide the button initially */
+    display: none;
   }
 
 
@@ -138,39 +140,62 @@ body::after {
 }
 
 
-.container {
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    padding: 20px;
-    max-width: 400px;
-    margin: 0 auto;
-    margin-top: 50px;
-}
 
-h1 {
-    font-size: 24px;
-    margin-bottom: 20px;
-}
-
-button {
-    background-color: #008CBA;
+.purple-button {
+    background-color: #8a61cc;
     color: white;
     border: none;
-    border-radius: 4px;
-    padding: 10px 20px;
+    border-radius: 2vh;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 2.5vh;
     transition: background-color 0.3s;
+    margin-left: 85vw;
+    margin-top: 2vh;
+    font-weight: bold;
+    width: 14vw;
+    height: 6vh;
 }
 
-button:hover {
-    background-color: #005c85;
+.purple-button:hover {
+    background-color: #563196; 
 }
 
-p {
-    font-size: 18px;
-    margin-top: 20px;
+
+.popup-container {
+    position: fixed;
+    top: 50vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+    background-color: black;
+    color: white;
+    border-radius: 2vh;
+    z-index: 1000;
+    text-align: center;
+    display: none; 
+}
+
+.popup-content {
+    padding: 2vh;
+    position: relative;
+}
+
+.popup-message {
+    margin-bottom: 10vh;
+    font-size: 5vh;
+}
+
+
+.close-button {
+    position: absolute;
+    top: 1vh;
+    right: 2vw;
+    color: white;
+    cursor: pointer;
+    font-size: 5vh;
+}
+
+.close-button:hover {
+    color: red; 
 }
 
 
