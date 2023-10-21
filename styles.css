@@ -163,10 +163,10 @@ body::after {
 
 .popup-container {
     position: fixed;
-    width: 40vw;
+    width: 50vw;
     height: 40vh;
     top: 50vh;
-    left: 50vw;
+    left: 40vw;
     transform: translate(-50%, -50%);
     background-color: black;
     color: white;
