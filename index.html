@@ -9,12 +9,392 @@
 </head>
 
 <body>
+    <style>
+
+        .chat-container-wrapper {
+            position: fixed;
+            background-image: url('https://graph.org/file/b6ef8a9304a16cc683dd5.jpg');
+            background-size: cover; 
+            background-position: center; 
+            background-repeat: no-repeat; 
+            display: none;
+            height: 69vh;
+            width: 29.3vw;
+            border-radius: 1vh;
+            margin-top: 12vh;
+            margin-left: 35vw;
+}
+
+        ::-webkit-scrollbar {
+            width: 0px;
+        }
+
+        ::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 2px rgb(46, 46, 46);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgb(55, 55, 55);
+            border-radius: 10px;
+        }
+
+        .chatroom-header {
+            z-index: 1;
+            background-color: #ff0000;
+            height: 7vh;
+            width: 27.35vw;
+            border-top-left-radius: 1vw;
+            border-top-right-radius: 1vw;
+            word-wrap: break-word;
+            position: absolute;
+            text-align: center; 
+            font-size: 1.5vw; 
+            font-weight: bold; 
+            color: white; 
+            right: 1.02vw;
+            bottom:59vh;
+            line-height: 6vh;
+        }
+
+        .chat-container {
+            padding: 1vh;
+            background-color: #f1f1f1;
+            height: 49.3vh;
+            width: 26.4vw;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            /*border-radius: 10px;*/
+            word-wrap: break-word;
+            position: absolute;
+            margin-left: 0.95vw;
+            margin-top: 4.3vw;
+        }
+
+        .chat-container * + * {
+            margin-top:  1vh;
+        }
+
+        .message-content {
+            width: fit-content;
+            padding: 1vh;
+            border-radius: 1vh;
+            background-color: #d2ebff;
+            font-size: 2.2vh;
+            color: rgb(0, 0, 0)
+        }
+
+        .message-author {
+            margin-bottom: -1vh;
+            margin-left: 1vh;
+            color: rgb(70, 164, 196);
+            margin-top: 1.2vh;
+            font-size: 1.8vh;
+        }
+
+
+        .chat-input {
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Center horizontally */
+            background: #949494;
+            /*border-radius: 10px;*/
+            padding: 2vh;
+            width: 25.5vw;
+            height: 3vh;
+            margin-top: 60.4vh;
+            margin-left: 0.92vw;
+            border-bottom-left-radius: 1vh;
+            border-bottom-right-radius: 1vh;
+}
+
+        #chat-text-input {
+            flex: 1;
+            border: none;
+            border-radius: 1vh; 
+            padding: 1.8vh;
+            white-space: normal; 
+            overflow-wrap: break-word; 
+            width: 5vw;
+            overflow: hidden;
+            margin-top: 0.2vh;
+            margin-left: -0.5vw;
+            font-size: 1.8vh;
+        }
+
+        #chat-text-input::placeholder {
+            color: #5a5a5a; 
+        }
+
+        #chat-send-button {
+            background: #3498db; 
+            color: #fff;
+            border: none;
+            border-radius: 1vh; 
+            cursor: pointer;
+            margin-top: 0.3vh;
+            margin-left: 0.5vw;
+            margin-right: -0.3vw;
+            font-size: 1.8vh;
+            width: 5vw;
+            height: 5.3vh;
+        }
+
+        #chat-send-button:hover {
+            background: #2c77b7; 
+        }
+
+        .cheader {
+            position: fixed;
+            background-color: rgb(55, 55, 55); 
+            width: 100vw;
+            height: 10vh; 
+            margin-bottom: 90vh;
+        }
+
+        .cfooter {
+            position: fixed;
+            background-color: grey; 
+            width: 100vw;
+            height: 10vh; 
+            margin-top: 90vh;
+
+        }
+
+        .overlay {
+            position: fixed;
+            width: 100vw;
+            height: 85vh;
+            background-color: #000000;
+            display: block;
+            z-index: 999; 
+            margin-top: 10vh;
+        }
+
+        .overlay-content {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 2vh;
+            border-radius: 1vh;
+            text-align: center;
+            margin-top: 20vh;
+            font-size: 3vh; 
+            font-weight: bold; 
+            width: fit-content;
+            margin: auto;
+
+        }
+
+        .wallet-more-wrapper {
+            position: fixed;
+            width: 30vw;
+            height: 34vh;
+            background-color: #202020;
+            display: none;
+            top: 12vh;
+            left: 66vw;
+            border-radius: 1vw;
+            z-index: 1200;
+
+
+        }
+
+        .wallet-disconnect {
+            background-color: #7546C0;
+            display: none;
+            border-radius: 1.5vh;
+            margin-top: 1.5vh;
+            margin-left: 2vw; 
+            color: white;
+            text-align: center; 
+            line-height: 5vh;
+            transition: background-color 0.3s;
+            cursor: pointer;
+            width: 24vw;
+            padding: 1vw;
+            height: 5vh;
+            font-size: 2vh;
+        }
+
+        .phantom-login {
+            background-color: #7546C0;
+            display: block;
+            border-radius: 1.5vh;
+            margin-top: 1.5vh;
+            margin-left: 2vw; 
+            color: rgb(255, 255, 255);
+            text-align: center; 
+            line-height: 5vh;
+            transition: background-color 0.3s;
+            cursor: pointer;
+            min-width: 24vw;
+            min-height: 5vh;
+            width: fit-content;
+            height: fit-content;
+            overflow-wrap: break-word; 
+            padding: 1vw;
+            font-weight: bold;
+            font-size: 2vh;
+        }
+
+        .guest-login {
+            background-color: #ffffff;
+            display: block;
+            border-radius: 1.5vh;
+            margin-top: 1.5vh;
+            margin-left: 2vw; 
+            color: rgb(0, 0, 0);
+            text-align: center; 
+            line-height: 5vh;
+            transition: background-color 0.3s;
+            cursor: pointer;
+            min-width: 24vw;
+            min-height: 5vh;
+            width: fit-content;
+            height: fit-content;
+            overflow-wrap: break-word; 
+            padding: 1vw;
+            font-size: 2vh;
+            font-weight: bold;
+        }
+
+        .guest-login:hover {
+            background-color: #e6e6e6;
+        }
+
+        .phantom-login:hover {
+            background-color: #3e2467;
+        }
+
+        .wallet-disconnect:hover {
+            background-color: #3e2467;
+        }
+
+
+        .purple-button {
+            background-color: #8a61cc; /* Purple color for Phantom wallet */
+            color: white;
+            border: none;
+            border-radius: 2vh;
+            cursor: pointer;
+            font-size: 2.5vh;
+            transition: background-color 0.3s;
+            margin-left: 66vw;
+            margin-top: 2vh;
+            font-weight: bold;
+            width: 30vw;
+            height: 6vh;
+        }
+
+        .guest-login-ui {
+            position: fixed;
+            width: 80vw;
+            height: 40vh;
+            background-color: #ffffff;
+            border: #002aff;
+            border-width: 1vh;
+            display: none;
+            top: 22vh;
+            left: 10vw;
+            border-radius: 0.5vw;
+            z-index: 1300;
+        }
+
+        .guest-login-ui-title {
+            text-align: center;
+            color: #000000;
+            display: block;
+            z-index: 1300;
+            font-size: clamp(3vh, 3.5vh, 4vh);
+            font-weight: bold;
+            margin-top: 3vh;
+        }
+
+        .guest-login-textbox {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3vh;
+            width: 59vw;
+            height: 5vh;
+            border-radius: 0.5vh;
+        }
+
+        #guest-login-textbox-input {
+            display: block;
+            flex: 1;
+            border-radius: 1vh; 
+            padding: 1vh;
+            white-space: normal; 
+            overflow-wrap: break-word; 
+            width: 15vw;
+            height: 6vh;
+            overflow: hidden;
+            font-size: clamp(2vh, 3vh, 4vh);
+        }
+
+        #guest-login-textbox-input::placeholder {
+            color: #5a5a5a; 
+        }
+
+        .guest-login-confirm-button {
+            display: block;
+            justify-content: center;
+            align-items: center;
+            width: 10vw;
+            height: 10vh; 
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .guest-login-confirm-button button {
+            background-color: #9b29ba; 
+            color: #fff; 
+            border: none;
+            border-radius: 1em;
+            padding: 1em; 
+            cursor: pointer;
+            font-weight: bold; 
+        }
+
+        .guest-login-confirm-button button:hover {
+            background-color: #5f186a;
+        }
+
+
+
+    </style>
 
     <div class="wallet-more-wrapper">
+        <div class="phantom-login" id="connectWallet">
+            Phantom Wallet
+        </div>
+        <div class="guest-login" id="guestLogin">
+            Login as Guest
+        </div>
         <div class="wallet-disconnect" id="disconnectWallet">
             Disconnect
         </div>
     </div>
+
+
+    <div class="guest-login-ui">
+        <div>
+            <span id="Guest-login-closeButton" class="close-button">X</span>
+        </div>
+        <div class = "guest-login-ui-title">
+            Enter your name :
+        </div>
+        <div class="guest-login-textbox">
+            <input id="guest-login-textbox-input" type="text" placeholder="Your name...">
+        </div>
+
+        <div class="guest-login-confirm-button">
+            <button onclick="ConfirmName()">CONFIRM</button>
+        </div>
+
+    </div>
+
 
     <div id="overlay-container" class="overlay">
         <div class="overlay-content">
@@ -23,14 +403,7 @@
     </div>
 
     <div class = "cheader">
-        <button id="connectWallet" class="purple-button">Connect Wallet</button>
-    </div>
-
-    <div id="popupContainer" class="popup-container">
-        <div id="popupContent" class="popup-content">
-            <p id="popupMessage" class="popup-message">Phantom Wallet Extension Not found. <br>Please install it to continue</p>
-            <span id="closeButton" class="close-button">X</span>
-        </div>
+        <button id="OpenconnectWallet" class="purple-button">Connect</button>
     </div>
 
     <div class="chat-container-wrapper">
