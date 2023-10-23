@@ -2,6 +2,7 @@ class Connection {
     constructor(username) {
         this.username = username;
         this.message_handlers = [];
+        // this.socket = new WebSocket("ws://localhost:8000/chat");
         this.socket = new WebSocket("ws://web3-backend-the-sos-brigade.koyeb.app/chat");
 
         this.connected = false;
@@ -39,6 +40,35 @@ class Connection {
 let username;
 let connection;
 let wallet_connection_status = false;
+
+const connectWalletButton = document.getElementById("connectWallet");
+const disconnectWalletButton = document.getElementById("disconnectWallet");
+const walletStatus = document.getElementById("walletStatus");
+const popupContainer = document.getElementById("popupContainer");
+const popupMessage = document.getElementById("popupMessage");
+const openoption = document.getElementById("OpenconnectWallet");
+const guestLogin = document.getElementById("guestLogin");
+const guestLoginClose = document.getElementById("Guest-login-closeButton");
+
+document.getElementById("chat-text-input").addEventListener("keyup", function(event) {
+    if (event.key === "Enter") {
+        sendChatMessage();
+    }
+});
+
+document.getElementById("guest-login-textbox-input").addEventListener("keyup", function(event) {
+    if (event.key === "Enter") {
+        ConfirmName();
+    }
+});
+
+
+
+disconnectWalletButton.addEventListener("click", disconnectWallet);
+connectWalletButton.addEventListener('click' , connectWallet)
+openoption.addEventListener("click", OpenconnectWallet);
+guestLogin.addEventListener("click", guestLoginFunc);
+
 
 function messageHandler(username, message) {
     let chat = document.getElementsByClassName("chat-messages").item(0);
@@ -79,27 +109,49 @@ function sendChatMessage() {
     input.value = "";
 }
 
+function ConfirmName(){
+    let input = document.getElementById("guest-login-textbox-input");
+    let text = input.value;
+    let name;
 
-document.getElementById("chat-text-input").addEventListener("keyup", function(event) {
-    if (event.key === "Enter") {
-        sendChatMessage();
+    if (text.length > 15) {
+    name = text.substring(0, 15) + "...";
+    } else {
+    name = text;
     }
-});
 
+    input.value = "";
+    username = name;
+    openoption.textContent = `${name}`;
+    connection = new Connection(username);
+    wallet_connection_status = true;
+    connection.add_handler(messageHandler)
+
+    const guestLoginUi = document.querySelector('.guest-login-ui');
+    const optionwrapper = document.querySelector('.wallet-more-wrapper');
+    const disconnectbutton = document.querySelector('.wallet-disconnect');
+    const phantombutton = document.querySelector('.phantom-login');
+    const guestbutton = document.querySelector('.guest-login');
+    const container = document.querySelector('.overlay');
+    const connectWalletButton = document.getElementById("OpenconnectWallet");
+    
+    optionwrapper.style.display = "none";
+    guestLoginUi.style.display = "none";
+    phantombutton.style.display = "none";
+    guestbutton.style.display = "none";
+    disconnectbutton.style.display = "block";
+    container.style.display="none";
+    connectWalletButton.style.display = "block";
+
+
+}
 
 function toggleHeight() {
     const container = document.querySelector('.chat-container-wrapper');
     container.classList.toggle('minimized');
 }
 
-
-const connectWalletButton = document.getElementById("connectWallet");
-const walletStatus = document.getElementById("walletStatus");
-const popupContainer = document.getElementById("popupContainer");
-const popupMessage = document.getElementById("popupMessage");
-
 function connectWallet() {
-
     if (wallet_connection_status == false){
         console.log('connecting wallet')
         if (window.solana && window.solana.isPhantom) {
@@ -116,7 +168,7 @@ function connectWallet() {
 
                         const container = document.querySelector('.overlay');
                         container.style.display="none";
-                        connectWalletButton.textContent = `${shortenedAddress}`;
+                        openoption.textContent = `${shortenedAddress}`;
                     })
                     .catch(error => {
                         console.error("Error connecting to Phantom wallet:", error);
@@ -127,23 +179,18 @@ function connectWallet() {
             }
     }
 
-    else {
-        const container = document.querySelector('.wallet-more-wrapper');
-        
-        if (container.style.display == "none") {
-            container.style.display = "block";
-        } 
-        else {
-            container.style.display = "none";
+    const disconnectbutton = document.querySelector('.wallet-disconnect');
+    const phantombutton = document.querySelector('.phantom-login');
+    const guestbutton = document.querySelector('.guest-login');
+    const optionwrapper = document.querySelector('.wallet-more-wrapper');
 
-        }
-    }
-    
+    disconnectbutton.style.display = "block";
+    phantombutton.style.display = "none";
+    guestbutton.style.display = "none";
+    optionwrapper.style.display = "none";
+
 }
 
-connectWalletButton.addEventListener("click", connectWallet);
-
-const disconnectWalletButton = document.getElementById("disconnectWallet");
 function disconnectWallet() {
   if (window.solana && window.solana.isPhantom) {
     window.solana.disconnect();
@@ -156,11 +203,51 @@ function disconnectWallet() {
     const overlay = document.querySelector('.overlay');
     overlay.style.display="block";
 
+    openoption.textContent = "Connect";
+    const disconnectbutton = document.querySelector('.wallet-disconnect');
+    const phantombutton = document.querySelector('.phantom-login');
+    const guestbutton = document.querySelector('.guest-login');
+
+    disconnectbutton.style.display = "none";
+    phantombutton.style.display = "block";
+    guestbutton.style.display = "block";
+
   }
 }
 
-disconnectWalletButton.addEventListener("click", disconnectWallet);
+function OpenconnectWallet () {
+    const container = document.querySelector('.wallet-more-wrapper');
+        if (container.style.display == "none") {
+            container.style.display = "block";
+        } 
+        else {
+            container.style.display = "none";
 
-closeButton.addEventListener("click", function() {
-    popupContainer.style.display = "none";
-});
+        }
+
+
+}
+
+function guestLoginFunc(){
+    const optionwrapper = document.querySelector('.wallet-more-wrapper');
+    const guestLoginUi = document.querySelector('.guest-login-ui');
+    const connectWalletButton = document.getElementById("OpenconnectWallet");
+
+    guestLoginUi.style.display = "block";
+    optionwrapper.style.display = "none";
+    connectWalletButton.style.display = "none";
+
+}
+
+function GuestLogincloseFunc(){
+    const guestLoginUi = document.querySelector('.guest-login-ui');
+    const connectWalletButton = document.getElementById("OpenconnectWallet");
+    
+    guestLoginUi.style.display = "none";
+    connectWalletButton.style.display = "block";
+}
+
+const closeButton = document.getElementById("Guest-login-closeButton")
+closeButton.addEventListener("click", GuestLogincloseFunc)
+
+
