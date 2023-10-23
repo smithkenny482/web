@@ -123,9 +123,9 @@ function ConfirmName(){
     input.value = "";
     username = name;
     openoption.textContent = `${name}`;
-    connection = new Connection(username);
+    /*connection = new Connection(username);
     wallet_connection_status = true;
-    connection.add_handler(messageHandler)
+    connection.add_handler(messageHandler)*/
 
     const guestLoginUi = document.querySelector('.guest-login-ui');
     const optionwrapper = document.querySelector('.wallet-more-wrapper');
