@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-image: url(images/background2.jpg);
+    background-image: url('https://graph.org/file/c6b469ba5a83a7666458f.jpg');
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
@@ -12,7 +12,7 @@ body {
 
 body::after {
     content: "";
-    background-color: rgba(255, 255, 255, 0.01); 
+    background-color: rgba(255, 255, 255, 0.01); /* 50% opacity white background */
     position: fixed;
     top: 0;
     left: 0;
@@ -24,20 +24,20 @@ body::after {
 .custom-heading {
     font-family: Arial, sans-serif;
     font-size: 5vh;
-    font-weight: bold; 
-    color: black; 
+    font-weight: bold; /* Make the text bold */
+    color: black; /* Change the text color to black */
 }
 
 .label-button {
-    font-weight: bold; 
-    font-size: 18px;   
+    font-weight: bold; /* Make the text bold */
+    font-size: 18px;   /* Increase the font size */
 }
 
 #playerName {
-    border-radius: 8px;
-    padding: 8px; 
-    font-size: 16px; 
-    width: 250px; 
+    border-radius: 8px; /* Add rounded corners */
+    padding: 8px; /* Add padding for spacing inside the input box */
+    font-size: 16px; /* Adjust the font size */
+    width: 250px; /* Adjust the width as needed */
 }
 
 #input-container {
@@ -49,21 +49,21 @@ body::after {
   }
 
 #welcomeMessage {
-    font-weight: bold; 
-    font-size: 34px;   
+    font-weight: bold; /* Make the text bold */
+    font-size: 34px;   /* Increase the font size */
 }
 
 .treasure-chest {
-    margin-right: 20px; 
-    border: 5px solid transparent; 
+    margin-right: 20px; /* Add space to the right of each .treasure-chest element */
+    border: 5px solid transparent; /* Add a transparent border to all chests */
     transition: border-color 0.3s;
     cursor: pointer;
   }
 
 .treasure-chest img {
-    width: 120px; 
-    height: auto; 
-    border-radius: 30px; 
+    width: 120px; /* Set the desired width */
+    height: auto; /* Automatically adjust the height to maintain aspect ratio */
+    border-radius: 30px; /* Add rounded corners */
   }
 
 .treasure-chest:hover {
@@ -77,17 +77,17 @@ body::after {
 
 .game-container {
     display: flex;
-    flex-wrap: wrap; 
-    justify-content: center; 
-    align-items: flex-start; 
+    flex-wrap: wrap; /* Allow boxes to wrap to the next line if needed */
+    justify-content: center; /* Center-align the boxes horizontally */
+    align-items: flex-start; /* Align the boxes to the top of the container */
     margin-top: 120px;
 }
 
 
 .score-leaderboard {
-    text-align: center; 
-    position: relative; 
-    top: -150px; 
+    text-align: center; /* Center the content horizontally */
+    position: relative; /* Enable positioning */
+    top: -150px; /* Move the element 20px down from the top */
     left: 10px
   }
   
@@ -95,7 +95,7 @@ body::after {
     margin-bottom: 20px;
     font-size: 18px;
     font-weight: bold;
-    margin-left: auto; 
+    margin-left: auto; /* Center horizontally */
     margin-right: auto;
 }
 
@@ -103,13 +103,13 @@ body::after {
     margin-top: 20px;
     font-size: 18px;
     font-weight: bold;
-    margin-left: auto; 
+    margin-left: auto; /* Center horizontally */
     margin-right: auto;
 }
 
 
 .next-button {
-    display: none;
+    display: none; /* Hide the button initially */
   }
 
 
@@ -141,30 +141,13 @@ body::after {
 
 
 
-.purple-button {
-    background-color: #8a61cc;
-    color: white;
-    border: none;
-    border-radius: 2vh;
-    cursor: pointer;
-    font-size: 2.5vh;
-    transition: background-color 0.3s;
-    margin-left: 85vw;
-    margin-top: 2vh;
-    font-weight: bold;
-    width: 14vw;
-    height: 6vh;
-}
-
 .purple-button:hover {
-    background-color: #563196; 
+    background-color: #563196; /* Slightly darker purple on hover */
 }
 
 
 .popup-container {
     position: fixed;
-    width: 50vw;
-    height: 40vh;
     top: 50vh;
     left: 50vw;
     transform: translate(-50%, -50%);
@@ -173,7 +156,7 @@ body::after {
     border-radius: 2vh;
     z-index: 1000;
     text-align: center;
-    display: none; 
+    display: none; /* Initially hide the popup */
 }
 
 .popup-content {
@@ -183,8 +166,7 @@ body::after {
 
 .popup-message {
     margin-bottom: 10vh;
-    font-size: 7vh;
-    font-weight: bold;
+    font-size: 5vh;
 }
 
 
@@ -192,233 +174,18 @@ body::after {
     position: absolute;
     top: 1vh;
     right: 2vw;
-    color: white;
+    color: rgb(255, 0, 0);
     cursor: pointer;
     font-size: 5vh;
 }
 
 .close-button:hover {
-    color: red; 
+    color: rgb(146, 0, 0); 
 }
 
 
 
 
-
-
-
-
-
-
-
-
-.chat-container-wrapper {
-    position: fixed;
-    background-image: url(images/chatroomcontainer.jpg);
-    background-size: cover; 
-    background-position: center; 
-    background-repeat: no-repeat; 
-    display: flex;
-    height: 69vh;
-    width: 29.3vw;
-    border-radius: 1vh;
-    margin-top: 12vh;
-    margin-left: 35vw;
-}
-
-::-webkit-scrollbar {
-    width: 0px;
-}
-
-::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 2px rgb(46, 46, 46);
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-    background: rgb(55, 55, 55);
-    border-radius: 10px;
-}
-
-.chatroom-header {
-    z-index: 1;
-    background-color: #000000;
-    height: 7vh;
-    width: 27.31vw;
-    border-top-left-radius: 1vw;
-    border-top-right-radius: 1vw;
-    word-wrap: break-word;
-    position: absolute;
-    text-align: center; 
-    font-size: 1.5vw; 
-    font-weight: bold; 
-    color: white; 
-    margin-left: 0.95vw;
-    margin-top: 2vh;
-    line-height: 6vh;
-}
-
-.chat-container {
-    padding: 1vh;
-    background-color: #f1f1f1;
-    height: 49.3vh;
-    width: 26.4vw;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    /*border-radius: 10px;*/
-    word-wrap: break-word;
-    position: absolute;
-    margin-left: 0.95vw;
-    margin-top: 4.3vw;
-}
-
-.chat-container * + * {
-    margin-top:  1vh;
-}
-
-.message-content {
-    width: fit-content;
-    padding: 1vh;
-    border-radius: 1vh;
-    background-color: #d2ebff;
-    font-size: 2.2vh;
-    color: rgb(0, 0, 0)
-}
-
-.message-author {
-    margin-bottom: -1vh;
-    margin-left: 1vh;
-    color: rgb(70, 164, 196);
-    margin-top: 1.2vh;
-    font-size: 1.8vh;
-}
-
-
-.chat-input {
-    display: flex;
-    align-items: center;
-    justify-content: center; /* Center horizontally */
-    background: #949494;
-    /*border-radius: 10px;*/
-    padding: 2vh;
-    width: 25.5vw;
-    height: 3vh;
-    margin-top: 60.4vh;
-    margin-left: 0.92vw;
-    border-bottom-left-radius: 1vh;
-    border-bottom-right-radius: 1vh;
-}
-
-#chat-text-input {
-    flex: 1;
-    border: none;
-    border-radius: 1vh; 
-    padding: 1.8vh;
-    white-space: normal; 
-    overflow-wrap: break-word; 
-    /*max-width: 100%;*/
-    width: 5vw;
-    overflow: hidden;
-    margin-top: 0.2vh;
-    margin-left: -0.5vw;
-    font-size: 1.8vh;
-}
-
-#chat-text-input::placeholder {
-    color: #5a5a5a; 
-}
-
-#chat-send-button {
-    background: #3498db; 
-    color: #fff;
-    border: none;
-    border-radius: 1vh; 
-    cursor: pointer;
-    margin-top: 0.3vh;
-    margin-left: 0.5vw;
-    margin-right: -0.3vw;
-    font-size: 1.8vh;
-    width: 5vw;
-    height: 5.3vh;
-}
-
-#chat-send-button:hover {
-    background: #2c77b7; 
-}
-
-.cheader {
-    position: fixed;
-    background-color: rgb(55, 55, 55); 
-    width: 100vw;
-    height: 10vh; 
-    margin-bottom: 90vh;
-}
-
-.cfooter {
-    position: fixed;
-    background-color: grey; 
-    width: 100vw;
-    height: 10vh; 
-    margin-top: 90vh;
-
-}
-
-.overlay {
-    position: fixed;
-    width: 50vw;
-    height: 75vh;
-    background-color: #000000;
-    display: block;
-    z-index: 999; 
-    margin-top: 12vh;
-    margin-left: 25vw;
-    border-radius: 2vh;
-}
-
-.overlay-content {
-    background-color: #000000;
-    color: #ffffff;
-    padding: 2vh;
-    border-radius: 1vh;
-    text-align: center;
-    margin-top: 20vh;
-    text-align: center; 
-    font-size: 6vh; 
-    font-weight: bold; 
-}
-
-.wallet-more-wrapper {
-    position: fixed;
-    width: 12.5vw;
-    height: 25vh;
-    background-color: #c3c3c3;
-    display: none;
-    top: 12vh;
-    left: 86vw;
-    border-radius: 1vw;
-    z-index: 2;
-
-}
-
-.wallet-disconnect {
-    background-color: #7546C0;
-    display: block;
-    border-radius: 1.5vh;
-    margin-top: 1.5vh;
-    margin-left: 2vw; 
-    color: white;
-    text-align: center; 
-    line-height: 5vh;
-    transition: background-color 0.3s;
-    cursor: pointer;
-    width: 19vh;
-    height: 5vh;
-    font-size: 2vh;
-}
-
-.wallet-disconnect:hover {
-    background-color: #3e2467;
-}
 
 
 
