@@ -166,7 +166,7 @@ function connectWallet() {
                         username = shortenedAddress;
                         //connection = new Connection(username);
                         wallet_connection_status = true;
-                        connection.add_handler(messageHandler)
+                        //connection.add_handler(messageHandler)
 
                         const container = document.querySelector('.overlay');
                         container.style.display="none";
