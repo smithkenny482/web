@@ -1,129 +1,257 @@
-let player = {'name': null, 'highscore':0 , 'current_score':0 , 'opened_chest':false, 'gameover':false};
-let players_data = [];
+class Connection {
+    constructor(username) {
+        this.username = username;
+        this.message_handlers = [];
+        this.socket = new WebSocket("ws://web3-backend-the-sos-brigade.koyeb.app/chat");
 
-// load sound
-const chest_open_audio = new Audio('chest.mp3');
+        this.connected = false;
+        this.socket.addEventListener("open", _ => {
+            this.connected = true;
+        })
 
-function startGame() {
-    playerName = document.getElementById('playerName').value;
+        this.socket.addEventListener("error", (error) => {
+            console.log(error)
+        })
 
-    console.log(playerName)
-    document.getElementById('input-container').style.display = 'none';
-    document.getElementById('welcomeMessage').textContent = `Welcome ${playerName}, Tap any of the box below`;
-    
-    player.name = playerName
-    players_data.push(player);
-
-    updateLeaderboard(playerName, player['highscore']);
-
-    const chestElements = document.querySelectorAll('.treasure-chest.hide-chest');
-    chestElements.forEach((chest) => {
-    chest.classList.remove('hide-chest');
-    });
-}
-
-function updateScore() {
-    document.getElementById('playerScore').textContent = player.current_score;
-    document.getElementById('highscore').textContent = player.highscore;
-}
-
-function generateBoxes() {
-    const boxes = document.querySelectorAll('.box');
-    const bombIndex = Math.floor(Math.random() * 3);
-    
-    boxes.forEach((box, index) => {
-        box.innerHTML = ''; // Clear any previous content
-        box.style.backgroundColor = 'transparent'; // Remove background color
-        box.disabled = false;
-
-        box.onclick = function () {
-            if (gameOver) return;
-            
-            if (index === bombIndex) {
-                gameOver = true;
-                box.style.backgroundColor = 'red';
-                if (playerScore > highscore) {
-                    highscore = playerScore;
-                }
-                updateScore();
-                alert(`Game over, ${playerName}! Your score: ${playerScore}`);
-            } else {
-                const points = index === 0 ? 1 : 2;
-                playerScore += points;
-                updateScore();
-                box.style.backgroundColor = 'green';
-                box.innerHTML = `+${points}`;
-                setTimeout(() => {
-                    generateBoxes();
-                }, 1000);
-            }
-
-            //clickSound.play(); // Play the click sound
-        };
-    });
-}
-
-function updateLeaderboard(playerName, playerScore) {
-
-    const leaderboardList = document.getElementById('leaderboardList');
-    let text = ''
-
-    const sorted_arr = Object.entries(players_data);
-    sorted_arr.sort((a, b) => b[1]['highscore'] - a[1]['highscore']);
-
-    for (let i = 0; i < sorted_arr.length; i++) {
-        const user = sorted_arr[i][1];
-        text += (i + 1) + '. ' + user['name'] + ' : '+ user['highscore'] + '\n';
-      }
-
-      leaderboardList.textContent = text;
-}
-
-function openBox(chest , playerName) {
-    if (player.gameover) {
-        alert(`Game over, ${playerName}! Start a new game!`);
-        return; 
+        this.socket.addEventListener("message", (event) => {
+            let [ username, message ] = event.data.split(":", 2);
+            this.message_handlers.forEach((f) => f(username, message));
+            console.log("message: " + event.data);
+        })
     }
 
-    if (player.opened_chest) {
-        return;
+    send(msg) {
+        this.socket.send(`${this.username}:${msg}`);
     }
 
-    chest_open_audio.play();
+    add_handler(handler) {
+        this.message_handlers.push(handler);
+    }
 
-     // change chest image
-    chest.firstElementChild.src = "images/open_chest.jpg";
+    disconnect() {
+        this.socket.close();
+    }
+}
 
-    const outcome = Math.random();
-    let points = 0;
 
-    if (outcome < 0.4) {
-        points = 10; // 40% chance of getting 10 points
-    } else if (outcome < 0.7) {
-        points = 15; // 30% chance of getting 15 points
+
+
+let username;
+let connection;
+let wallet_connection_status = false;
+
+const connectWalletButton = document.getElementById("connectWallet");
+const disconnectWalletButton = document.getElementById("disconnectWallet");
+const walletStatus = document.getElementById("walletStatus");
+const popupContainer = document.getElementById("popupContainer");
+const popupMessage = document.getElementById("popupMessage");
+const openoption = document.getElementById("OpenconnectWallet");
+const guestLogin = document.getElementById("guestLogin");
+const guestLoginClose = document.getElementById("Guest-login-closeButton");
+const openChat = document.getElementById("OpenChatButton");
+
+document.getElementById("chat-text-input").addEventListener("keyup", function(event) {
+    if (event.key === "Enter") {
+        sendChatMessage();
+    }
+});
+
+document.getElementById("guest-login-textbox-input").addEventListener("keyup", function(event) {
+    if (event.key === "Enter") {
+        ConfirmName();
+    }
+});
+
+
+
+disconnectWalletButton.addEventListener("click", disconnectWallet);
+connectWalletButton.addEventListener('click' , connectWallet)
+openoption.addEventListener("click", OpenconnectWallet);
+openChat.addEventListener("click", OpenChatFunc);
+guestLogin.addEventListener("click", guestLoginFunc);
+
+
+function messageHandler(username, message) {
+    let chat = document.getElementsByClassName("chat-messages").item(0);
+
+    let message_div = document.createElement("div");
+    message_div.classList.add("chat-message");
+
+    let message_author = document.createElement("div");
+    message_author.classList.add("message-author");
+    message_author.textContent = username;
+
+    message_div.appendChild(message_author);
+
+    let message_content = document.createElement("div");
+    message_content.classList.add("message-content");
+    message_content.textContent = message;
+
+    message_div.appendChild(message_content);
+    
+    chat.appendChild(message_div)
+    scrollToBottom();
+}
+
+function scrollToBottom() {
+    let chat = document.querySelector(".chat-container");
+    chat.scrollTop = chat.scrollHeight;
+}
+
+function sendChatMessage() {
+    let input = document.getElementById("chat-text-input");
+    let text = input.value;
+
+    if (connection.socket.readyState === WebSocket.CLOSED) {
+        document.getElementById("chat-send-button").style.border = "2px solid red";
+    }
+
+    connection.send(text);
+    input.value = "";
+}
+
+function ConfirmName(){
+    let input = document.getElementById("guest-login-textbox-input");
+    let text = input.value;
+    let name;
+
+    if (text.length > 15) {
+    name = text.substring(0, 15) + "...";
     } else {
-        player.gameover = true; // 30% chance of hitting a bomb, game over
+    name = text;
     }
 
-    // Update player score
-    player.current_score += points;
-    player.opened_chest = true;
+    input.value = "";
+    username = name;
+    openoption.textContent = `${name}`;
+    connection = new Connection(username);
+    wallet_connection_status = true;
+    connection.add_handler(messageHandler)
 
-    if (player.current_score > player.highscore) {
-        player.highscore = player.current_score
-        updateLeaderboard();
-    }
+    const guestLoginUi = document.querySelector('.guest-login-ui');
+    const optionwrapper = document.querySelector('.wallet-more-wrapper');
+    const disconnectbutton = document.querySelector('.wallet-disconnect');
+    const phantombutton = document.querySelector('.phantom-login');
+    const guestbutton = document.querySelector('.guest-login');
+    const container = document.querySelector('.overlay');
+    const connectWalletButton = document.getElementById("OpenconnectWallet");
+    
+    optionwrapper.style.display = "none";
+    guestLoginUi.style.display = "none";
+    phantombutton.style.display = "none";
+    guestbutton.style.display = "none";
+    disconnectbutton.style.display = "block";
+    container.style.display="none";
+    connectWalletButton.style.display = "block";
+    openChat.style.display = "block";
 
-    updateScore();
+
 }
-// Function to start the next round
-function nextRound() {
-    gameInProgress = false; // Reset the game state
-    document.querySelector('.next-button button').style.display = 'none'; // Hide the "Next" button
-    //generateChests();
+
+function toggleHeight() {
+    const container = document.querySelector('.chat-container-wrapper');
+    container.classList.toggle('minimized');
 }
 
 function connectWallet() {
-    let keypair = solanaWeb3.Keypair.generate()
-    console.log(keypair)
+    if (wallet_connection_status == false){
+        console.log('connecting wallet')
+        if (window.solana && window.solana.isPhantom) {
+                window.solana.connect()
+                    .then(() => {
+                        const publicKey = window.solana.publicKey;
+                        const addressStr = publicKey.toString();
+                        const shortenedAddress = addressStr.substring(0, 4) + "..." + addressStr.slice(-4);
+
+                        username = shortenedAddress;
+                        connection = new Connection(username);
+                        wallet_connection_status = true;
+                        connection.add_handler(messageHandler)
+
+                        const container = document.querySelector('.overlay');
+                        container.style.display="none";
+                        openoption.textContent = `${shortenedAddress}`;
+                    })
+                    .catch(error => {
+                        console.error("Error connecting to Phantom wallet:", error);
+                    });
+            } else {
+                console.error("Phantom wallet not found. Please install it.");
+                popupContainer.style.display = "block";
+            }
+    }
+
+    const disconnectbutton = document.querySelector('.wallet-disconnect');
+    const phantombutton = document.querySelector('.phantom-login');
+    const guestbutton = document.querySelector('.guest-login');
+    const optionwrapper = document.querySelector('.wallet-more-wrapper');
+
+    disconnectbutton.style.display = "block";
+    phantombutton.style.display = "none";
+    guestbutton.style.display = "none";
+    optionwrapper.classList.toggle("slide-left")
+    openChat.style.display = "block";
+
 }
+
+function disconnectWallet() {
+  if (window.solana && window.solana.isPhantom) {
+    window.solana.disconnect();
+    connection.disconnect();
+    connectWalletButton.textContent = "Connect Wallet";
+    wallet_connection_status = false;
+
+    const overlay = document.querySelector('.overlay');
+    overlay.style.display="block";
+
+    openoption.textContent = "Connect";
+    const disconnectbutton = document.querySelector('.wallet-disconnect');
+    const phantombutton = document.querySelector('.phantom-login');
+    const guestbutton = document.querySelector('.guest-login');
+    const openChat = document.getElementById("OpenChatButton");
+    const container = document.querySelector('.wallet-more-wrapper');
+
+
+    disconnectbutton.style.display = "none";
+    phantombutton.style.display = "block";
+    guestbutton.style.display = "block";
+    openChat.style.display = "none";
+    container.classList.toggle("slide-left")
+
+  }
+}
+
+function OpenconnectWallet() {
+    const container = document.querySelector('.wallet-more-wrapper');
+    container.classList.toggle("slide-left")
+    container.style.display = "block";
+
+  }
+
+function OpenChatFunc(){
+    const container = document.querySelector('.chat-container-wrapper');
+    container.classList.toggle("slide-right")
+}
+  
+  
+function guestLoginFunc(){
+    const optionwrapper = document.querySelector('.wallet-more-wrapper');
+    const guestLoginUi = document.querySelector('.guest-login-ui');
+    const connectWalletButton = document.getElementById("OpenconnectWallet");
+
+    guestLoginUi.style.display = "block";
+    connectWalletButton.style.display = "none";
+    optionwrapper.classList.toggle("slide-left")
+
+}
+
+function GuestLogincloseFunc(){
+    const guestLoginUi = document.querySelector('.guest-login-ui');
+    const connectWalletButton = document.getElementById("OpenconnectWallet");
+    
+    guestLoginUi.style.display = "none";
+    connectWalletButton.style.display = "block";
+}
+
+const closeButton = document.getElementById("Guest-login-closeButton")
+closeButton.addEventListener("click", GuestLogincloseFunc)

@@ -28,124 +28,6 @@ body::after {
     color: black; /* Change the text color to black */
 }
 
-.label-button {
-    font-weight: bold; /* Make the text bold */
-    font-size: 18px;   /* Increase the font size */
-}
-
-#playerName {
-    border-radius: 8px; /* Add rounded corners */
-    padding: 8px; /* Add padding for spacing inside the input box */
-    font-size: 16px; /* Adjust the font size */
-    width: 250px; /* Adjust the width as needed */
-}
-
-#input-container {
-    display: initial; 
-}
-
-.hide-chest {
-    display: none;
-  }
-
-#welcomeMessage {
-    font-weight: bold; /* Make the text bold */
-    font-size: 34px;   /* Increase the font size */
-}
-
-.treasure-chest {
-    margin-right: 20px; /* Add space to the right of each .treasure-chest element */
-    border: 5px solid transparent; /* Add a transparent border to all chests */
-    transition: border-color 0.3s;
-    cursor: pointer;
-  }
-
-.treasure-chest img {
-    width: 120px; /* Set the desired width */
-    height: auto; /* Automatically adjust the height to maintain aspect ratio */
-    border-radius: 30px; /* Add rounded corners */
-  }
-
-.treasure-chest:hover {
-    border-color: rgb(0, 255, 89); 
-  }
-
-
-.header {
-    text-align: center;
-}
-
-.game-container {
-    display: flex;
-    flex-wrap: wrap; /* Allow boxes to wrap to the next line if needed */
-    justify-content: center; /* Center-align the boxes horizontally */
-    align-items: flex-start; /* Align the boxes to the top of the container */
-    margin-top: 120px;
-}
-
-
-.score-leaderboard {
-    text-align: center; /* Center the content horizontally */
-    position: relative; /* Enable positioning */
-    top: -150px; /* Move the element 20px down from the top */
-    left: 10px
-  }
-  
-.score {
-    margin-bottom: 20px;
-    font-size: 18px;
-    font-weight: bold;
-    margin-left: auto; /* Center horizontally */
-    margin-right: auto;
-}
-
-.highscore {
-    margin-top: 20px;
-    font-size: 18px;
-    font-weight: bold;
-    margin-left: auto; /* Center horizontally */
-    margin-right: auto;
-}
-
-
-.next-button {
-    display: none; /* Hide the button initially */
-  }
-
-
-.leaderboard {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background-color: white;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-}
-
-.leaderboard h2 {
-    font-size: 18px;
-    margin-bottom: 10px;
-}
-
-#leaderboardList {
-    list-style: none;
-    padding: 0;
-}
-
-#leaderboardList li {
-    font-size: 14px;
-    margin-bottom: 5px;
-}
-
-
-
-.purple-button:hover {
-    background-color: #563196; /* Slightly darker purple on hover */
-}
-
-
 .popup-container {
     position: fixed;
     top: 50vh;
@@ -169,6 +51,381 @@ body::after {
     font-size: 5vh;
 }
 
+.chat-container-wrapper {
+    position: fixed;
+    background-image: url('https://graph.org/file/b6ef8a9304a16cc683dd5.jpg');
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+    display: block;
+    height: 85vh;
+    width: 100vw;
+    right:110vw;
+    margin-top: 10vh;
+    transition: right 0.5s;
+    z-index: 100000;
+}
+
+.chat-container-wrapper.slide-right{
+    right:0vw;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 2px rgb(46, 46, 46);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgb(55, 55, 55);
+    border-radius: 10px;
+}
+
+.chatroom-header {
+    z-index: 1;
+    background-color: #cdcdcd;
+    height: 7vh;
+    width: 101.1vw;
+    word-wrap: break-word;
+    position: absolute;
+    text-align: center; 
+    font-size: clamp(3vh , 1vh , 5vh); 
+    font-weight: bold; 
+    color: white; 
+    line-height: 6.5vh;
+}
+
+.chat-container {
+    background-color: #ffffff;
+    height: 70vh;
+    width: 100vw;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    word-wrap: break-word;
+    position: absolute;
+    margin-top: 7vh;
+}
+
+.chat-container * + * {
+    margin-top:  1vh;
+}
+
+
+.message-content {
+    width: fit-content;
+    padding: 1vh;
+    border-radius: 1vh;
+    background-color: #d2ebff;
+    font-size: 2.2vh;
+    color: rgb(0, 0, 0);
+    margin-left: 1vw;
+}
+
+.message-author {
+    margin-bottom: -1vh;
+    margin-left: 1vh;
+    color: rgb(70, 164, 196);
+    margin-top: 1.2vh;
+    font-size: 1.8vh;
+    margin-left: 1vw;
+}
+
+.chat-input {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #949494;
+    padding: 2vh;
+    width: 98.85vw;
+    height: 4vh;
+    margin-top: 77vh;
+    z-index: 1;
+}
+
+#chat-text-input {
+    border: none;
+    border-radius: 1vh; 
+    padding: 1.8vh;
+    white-space: normal; 
+    overflow-wrap: break-word; 
+    width: 60vw;
+    overflow: hidden;
+    margin-top: 0.2vh;
+    font-size: 1.8vh;
+}
+
+#chat-text-input::placeholder {
+    color: #5a5a5a; 
+}
+
+#chat-send-button {
+    background: #3498db; 
+    color: #fff;
+    border-radius: 1vh; 
+    cursor: pointer;
+    margin-top: 0.3vh;
+    margin-right: clamp(10vw , 5vw , 20vw);
+    margin-left: 2vw;
+    font-size: 1.8vh;
+    width: 15vw;
+    height: 5.5vh;
+}
+
+#chat-send-button:hover {
+    background: #2c77b7; 
+}
+
+.cheader {
+    position: fixed;
+    justify-content: space-between;
+    background-color: rgb(55, 55, 55); 
+    width: 100vw;
+    height: 10vh; 
+    margin-bottom: 90vh;
+    display: flex;
+}
+
+.cfooter {
+    position: fixed;
+    background-color: grey; 
+    width: 100vw;
+    height: 10vh; 
+    margin-top: 90vh;
+    display: flex;
+    z-index: 10;
+
+}
+
+.overlay {
+    position: fixed;
+    width: 100vw;
+    height: 85vh;
+    background-color: #000000;
+    display: block;
+    z-index: 3; 
+    margin-top: 10vh;
+}
+
+.overlay-content {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 2vh;
+    border-radius: 1vh;
+    text-align: center;
+    margin-top: 20vh;
+    font-size: 3vh; 
+    font-weight: bold; 
+    width: fit-content;
+    margin: auto;
+
+}
+
+.wallet-more-wrapper {
+    position: fixed;
+    width: 50vw;
+    height: 90vh;
+    background-color: #202020;
+    display: block;
+    top: 10vh;
+    left: 100vw;
+    border-radius: 0vw;
+    z-index: 4;
+    transition: left 0.5s;
+}
+
+.wallet-more-wrapper.slide-left {
+    left:50vw
+}
+
+.wallet-disconnect {
+    background-color: #7546C0;
+    display: none;
+    border-radius: 1.5vh;
+    color: white;
+    text-align: center; 
+    line-height: 5vh;
+    transition: background-color 0.3s;
+    cursor: pointer;
+    width: 40vw;
+    padding: 1.5vw;
+    height: 5vh;
+    font-size: clamp(2vh, 2vh, 5vh);;
+    margin: auto;
+    margin-top: 3vh;
+    font-weight: bold;
+}
+
+.phantom-login {
+    background-color: #7546C0;
+    display: block;
+    border-radius: 1.5vh;
+    color: rgb(255, 255, 255);
+    text-align: center; 
+    line-height: 2vh;
+    transition: background-color 0.3s;
+    cursor: pointer;
+    min-width: 24vw;
+    min-height: 5vh;
+    width: 40vw;
+    height: fit-content;
+    overflow-wrap: break-word; 
+    padding-top: 3vh;
+    font-weight: bold;
+    font-size: clamp(2vh, 2vh, 5vh);;
+    margin: auto;
+    margin-top: 3vh;
+
+}
+
+.guest-login {
+    background-color: #ffffff;
+    display: block;
+    border-radius: 1.5vh;
+    color: rgb(0, 0, 0);
+    text-align: center; 
+    line-height: 2vh;
+    transition: background-color 0.3s;
+    cursor: pointer;
+    min-width: 24vw;
+    min-height: 5vh;
+    width: 40vw;
+    height: fit-content;
+    overflow-wrap: break-word; 
+    padding-top: 3vh;
+    font-size: 2vh;
+    font-weight: bold;
+    margin: auto;
+    margin-top: 3vh;
+}
+
+.guest-login:hover {
+    background-color: #e6e6e6;
+}
+
+.phantom-login:hover {
+    background-color: #3e2467;
+}
+
+.wallet-disconnect:hover {
+    background-color: #3e2467;
+}
+
+.purple-button {
+    background-color: #8a61cc; 
+    color: white;
+    border: none;
+    border-radius: 2vh;
+    cursor: pointer;
+    font-size: clamp(2vh , 1vh , 2.5vh);
+    transition: background-color 0.3s;
+    margin-right:5vw;
+    margin-top: 2vh;
+    font-weight: bold;
+    width: 30vw;
+    height: 6vh;
+}
+
+.purple-button:hover {
+    background-color: #563196; /* Slightly darker purple on hover */
+}
+
+.guest-login-ui {
+    position: fixed;
+    width: 80vw;
+    height: 30vh;
+    background-color: #ffffff;
+    border: #002aff;
+    border-width: 1vh;
+    display: none;
+    top: 22vh;
+    left: 10vw;
+    border-radius: 0.5vw;
+    z-index: 1300;
+}
+
+.guest-login-ui-title {
+    text-align: center;
+    color: #000000;
+    display: block;
+    z-index: 1300;
+    font-size: clamp(3vh, 3.5vh, 4vh);
+    font-weight: bold;
+    margin-top: 3vh;
+}
+
+.guest-login-textbox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3vh;
+    width: 59vw;
+    height: 5vh;
+    border-radius: 0.5vh;
+}
+
+#guest-login-textbox-input {
+    display: block;
+    flex: 1;
+    border-radius: 1vh; 
+    padding: 1vh;
+    white-space: normal; 
+    overflow-wrap: break-word; 
+    width: 15vw;
+    height: 6vh;
+    overflow: hidden;
+    font-size: clamp(2vh, 3vh, 4vh);
+}
+
+#guest-login-textbox-input::placeholder {
+    color: #5a5a5a; 
+}
+
+.guest-login-confirm-button {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    width: 10vw;
+    height: 10vh; 
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.guest-login-confirm-button button {
+    background-color: #9b29ba; 
+    color: #fff; 
+    border: none;
+    border-radius: 1em;
+    padding: 1em; 
+    cursor: pointer;
+    font-weight: bold; 
+}
+
+.guest-login-confirm-button button:hover {
+    background-color: #5f186a;
+}
+
+.open-chatroom-button{
+    background-color: #8a61cc; 
+    display: none;
+    color: white;
+    border: none;
+    border-radius: 2vh;
+    cursor: pointer;
+    font-size: 2.5vh;
+    transition: background-color 0.3s;
+    margin-left: 2vw;
+    margin-top: 2vh;
+    font-weight: bold;
+    width: 30vw;
+    height: 6vh;
+}
+
+.open-chatroom-button:hover{
+    background-color: #563196;
+}
 
 .close-button {
     position: absolute;
@@ -176,7 +433,7 @@ body::after {
     right: 2vw;
     color: rgb(255, 0, 0);
     cursor: pointer;
-    font-size: 5vh;
+    font-size:3.5vh;
 }
 
 .close-button:hover {
