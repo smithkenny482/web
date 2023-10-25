@@ -164,7 +164,7 @@ function connectWallet() {
                         const shortenedAddress = addressStr.substring(0, 4) + "..." + addressStr.slice(-4);
 
                         username = shortenedAddress;
-                        connection = new Connection(username);
+                        //connection = new Connection(username);
                         wallet_connection_status = true;
                         connection.add_handler(messageHandler)
 
