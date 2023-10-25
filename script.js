@@ -255,3 +255,48 @@ function GuestLogincloseFunc(){
 
 const closeButton = document.getElementById("Guest-login-closeButton")
 closeButton.addEventListener("click", GuestLogincloseFunc)
+
+
+
+
+
+function addSwipeSupport(container) {
+    let isSwiping = false;
+    let startX;
+    let startScrollX;
+  
+    container.addEventListener('mousedown', startSwipe);
+    container.addEventListener('touchstart', startSwipe);
+  
+    function startSwipe(event) {
+      isSwiping = true;
+      startX = event.clientX || event.touches[0].clientX;
+      startScrollX = container.scrollLeft;
+    }
+  
+    container.addEventListener('mousemove', moveSwipe);
+    container.addEventListener('touchmove', moveSwipe);
+  
+    function moveSwipe(event) {
+      if (isSwiping) {
+        const currentX = event.clientX || event.touches[0].clientX;
+        const swipeX = currentX - startX;
+        container.scrollLeft = startScrollX - swipeX;
+      }
+    }
+  
+    container.addEventListener('mouseleave', stopSwipe);
+    container.addEventListener('mouseup', stopSwipe);
+    container.addEventListener('touchcancel', stopSwipe);
+    container.addEventListener('touchend', stopSwipe);
+  
+    function stopSwipe() {
+      isSwiping = false;
+    }
+  }
+  
+  const mainContainer1 = document.querySelector('.main-container1');
+  addSwipeSupport(mainContainer1);
+  
+  const mainContainer2 = document.querySelector('.main-container2');
+  addSwipeSupport(mainContainer2);
