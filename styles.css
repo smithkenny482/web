@@ -495,7 +495,7 @@ body::after {
 .main-container1-top-title{
     position: absolute;
     display: block;
-    width: 50vw;
+    width: 80vw;
     height: 5vh;
     justify-content: center; 
     align-items: center; 
@@ -512,7 +512,7 @@ body::after {
 .main-container2-top-title{
     position: absolute;
     display: block;
-    width: 50vw;
+    width: 80vw;
     height: 5vh;
     justify-content: center; 
     align-items: center; 
